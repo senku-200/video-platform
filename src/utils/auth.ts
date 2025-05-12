@@ -87,9 +87,10 @@ export const transformApiUrl = (url: string): string => {
   if (url.startsWith('http')) {
     return url;
   }
-  // If the URL already starts with /api/, just prepend the host, not the API_BASE_URL
   if (url.startsWith('/api/')) {
-    return `http://localhost:3000${url}`;
+    // Remove the leading '/api/' and prepend '/api/v1/'
+    const newPath = url.replace(/^\/api\//, '/api/v1/');
+    return `http://localhost:3000${newPath}`;
   }
   // Otherwise, add the base URL
   return `${API_BASE_URL}${url.startsWith('/') ? url : '/' + url}`;
